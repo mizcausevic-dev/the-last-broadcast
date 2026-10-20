@@ -19,9 +19,17 @@ Start recorded from the shell: 2026-10-20T18:47:54Z. This handoff was written at
 - A browser with `localStorage` completely disabled was not launched. The quota failure was tested with a fake storage object.
 - This environment ran the tests. A second, empty machine was not used. The game has no compile step, so a clean run is the Python server above.
 
+## Published
+
+Checked after the note above, same day:
+
+- Repository: https://github.com/mizcausevic-dev/the-last-broadcast
+- Pages source: branch `gh-pages`, path `/`. API status `built`.
+- Live request: HTTP 200 from https://mizcausevic-dev.github.io/the-last-broadcast/ and the body is the game's HTML.
+
 ## Blockers
 
-None for local play. GitHub publish is a separate step recorded after the push command, not before it.
+None for local play or the Pages URL above.
 
 ## Next
 
