@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Last Broadcast, product frame</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { margin: 0; font-family: Georgia, "Iowan Old Style", serif; line-height: 1.45; }
+    header, main { max-width: 880px; margin: 0 auto; padding: 20px 16px; }
+    h1 { font-size: 1.8rem; margin: 0 0 8px; }
+    h2 { font-size: 1.05rem; margin: 0 0 6px; }
+    .controls, .grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    button, select { font: inherit; min-height: 44px; padding: 8px 12px; }
+    article { padding: 12px 14px; border: 1px solid currentColor; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 16px; }
+    :focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+    html[data-theme="bento"][data-mode="light"] { background: #f4f1ea; color: #1c1915; }
+    html[data-theme="bento"][data-mode="dark"] { background: #16130f; color: #f4f1ea; }
+    html[data-theme="cosmic"][data-mode="light"] { background: #e7fbff; color: #07141c; }
+    html[data-theme="cosmic"][data-mode="dark"] { background: #0b0c10; color: #c5c6c7; }
+    html[data-theme="swiss"][data-mode="light"] { background: #fff; color: #111; }
+    html[data-theme="swiss"][data-mode="dark"] { background: #111; color: #f5f5f5; }
+    html[data-theme="aqua"][data-mode="light"] { background: #e5fff8; color: #04342c; }
+    html[data-theme="aqua"][data-mode="dark"] { background: #042824; color: #d7fff4; }
+    html[data-theme="brutal"][data-mode="light"] { background: #fff36b; color: #111; }
+    html[data-theme="brutal"][data-mode="dark"] { background: #2a0a4a; color: #fff36b; }
+    html[data-theme="steel"][data-mode="light"] { background: #e6e8eb; color: #1b1f24; }
+    html[data-theme="steel"][data-mode="dark"] { background: #121417; color: #d5d8de; }
+    html[data-theme="parchment"][data-mode="light"] { background: #f3e6c8; color: #3a2a16; }
+    html[data-theme="parchment"][data-mode="dark"] { background: #2a2116; color: #f3e6c8; }
+    html[data-theme="cosmic"][data-mode="dark"] article { background: #1f2833; }
+    html[data-theme="brutal"] article { box-shadow: 4px 4px 0 currentColor; }
+    html[data-theme="swiss"] article { border-radius: 0; }
+    html[data-theme="bento"] article { border-radius: 18px; }
+  </style>
+</head>
+<body>
+  <header>
+    <p>Product frame. Not the game. No solution.</p>
+    <h1>The Last Broadcast</h1>
+    <div class="controls">
+      <label>Theme
+        <select id="theme">
+          <option value="bento">Bento Grid</option>
+          <option value="cosmic">Cosmic Cyber</option>
+          <option value="swiss">Swiss Architect</option>
+          <option value="aqua">Aqua Web 2.0</option>
+          <option value="brutal">Pop Brutalist</option>
+          <option value="steel">Steel Tactical</option>
+          <option value="parchment">Parchment</option>
+        </select>
+      </label>
+      <button type="button" id="mode">Mode</button>
+    </div>
+  </header>
+  <main>
+    <div class="grid">
+      <article><h2>1. What it is</h2><p>A single-player browser mystery about a missing overnight host at a fictional radio station.</p></article>
+      <article><h2>2. Who it is for</h2><p>One person who wants a short fair case, with no account and no timer.</p></article>
+      <article><h2>3. Why it wins</h2><p>An account is accepted only with an authored proof. Equivalent note sets count. A wrong account does not close the case.</p></article>
+      <article><h2>4. How it is structured</h2><p>Four rooms, object lists, a notebook, three interviews, five deductions, and one accusation. Content is separate from the rules.</p></article>
+      <article><h2>5. How people find it</h2><p>Run it locally. This delivery was not deployed.</p></article>
+      <article><h2>6. How people use it</h2><p>Explore, inspect, interview, deduce, then write the account. Hints stay on one unmet objective.</p></article>
+      <article><h2>7. How they finish</h2><p>The ending repeats notes already in the notebook. There is no purchase.</p></article>
+      <article><h2>8. How it makes money</h2><p>It does not. No ads, no leads, no payments.</p></article>
+      <article><h2>9. How it launches</h2><p><code>npm ci</code>, then <code>npm run dev</code> on 127.0.0.1. Preview uses port 4173.</p></article>
+      <article><h2>10. What to improve</h2><p>A person should time a first play. The 15 to 25 minute figure is a target, not a measurement.</p></article>
+    </div>
+  </main>
+  <script>
+    const root = document.documentElement;
+    const theme = document.querySelector("#theme");
+    const modeButton = document.querySelector("#mode");
+    let mode = "dark";
+    let name = "cosmic";
+    try {
+      const stored = localStorage.getItem("lb-product-frame");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.mode === "light" || parsed.mode === "dark") mode = parsed.mode;
+        if (typeof parsed.theme === "string") name = parsed.theme;
+      }
+    } catch { /* keep defaults */ }
+    function paint() {
+      root.dataset.theme = name;
+      root.dataset.mode = mode;
+      theme.value = name;
+      modeButton.textContent = mode === "dark" ? "Dark mode" : "Light mode";
+      try {
+        localStorage.setItem("lb-product-frame", JSON.stringify({ theme: name, mode: mode }));
+      } catch { /* theme still applies in this tab */ }
+    }
+    theme.addEventListener("change", () => { name = theme.value; paint(); });
+    modeButton.addEventListener("click", () => { mode = mode === "dark" ? "light" : "dark"; paint(); });
+    paint();
+  </script>
+</body>
+</html>

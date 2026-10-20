@@ -1,0 +1,20 @@
+{
+  "name": "the-last-broadcast",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173 --strictPort",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "check": "npm test && npm run build && npm run test:browser"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vitest": "^3.2.4"
+  }
+}
